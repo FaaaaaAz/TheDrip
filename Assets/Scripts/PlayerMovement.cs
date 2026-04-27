@@ -19,6 +19,15 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
+        // Runtime safeguards: avoid gravity being zero due to scene overrides.
+        if (Mathf.Approximately(gravity, 0f))
+        {
+            gravity = -20f;
+        }
+        if (groundedStickForce >= 0f || Mathf.Approximately(groundedStickForce, 0f))
+        {
+            groundedStickForce = -0.5f;
+        }
     }
 
     private void Update()
